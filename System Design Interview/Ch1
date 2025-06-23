@@ -1,0 +1,105 @@
+Single Server setup
+-everything running on one server (web app, database, cache)
+-Basic flow DNS->IP->HTTP request to server->returns HTML/JSON
+-Traffic source either web app or mobile app
+-Web app: combo of server-side (Java, Python) and client side view (HTML/Javascript)
+-Mobile app: HTTP for comms and JSON for API response format
+
+Database
+-More users means one server not sufficient, need separate database server
+-Separate web tier and data tier servers allow independent scaling
+-Relational databases (SQL)
+	-Store data in tables and rows, can perform join operations
+	-Ex: MySQL, Oracle, PostgreSQL
+-Non-Relational databases (NoSQL)
+	-Store data as key-value, graph, column and document stores
+	-Ex: CouchDB, Neo4j, Cassandra, HBase, Amazon DynamoDB
+-When to use NRDBMS:
+	-super low latency, unstructed data, serialize/deserialize data, massive data
+	-otherwise, use traditional RDBMS
+
+Vertical scaling vs horizontal scaling
+-Vertical scaling = "scale up", more CPU, RAM, etc to servers
+	-good when traffic is low, simple to do
+	-lacks failover, redundancy
+-Horizontal scaling = "scale-out", adding more servers
+	-good for large scale applications
+
+Load balancer
+-Evenly distributes incoming traffic among web servers
+-Web servers not reached directly by clients
+-private IPs between servers handled by load balancer
+-Solves no failover and improves availability
+-Trivial to add more web servers if setup cant handle traffic
+
+Database replication
+-Master/slave database servers
+-Writes, data modifying commands handled by master
+-Reads handled by slaves (usually multiple slaves)
+-Advantages: better performance, reliability, availability
+-Multiple slaves can process requests in parallel
+-slaves can go offline and reads sent to master temporarily
+-master can go offline and slave will be temporarily promoted
+
+Cache
+-Temporary storage that has expensive/frequently accessed data for quick service
+-Cache tier = temporary data store layer, faster than database
+-read through cache: client pings web server, server checks cache, updates cache if needed
+-Cache is for data read frequently, modified infrequently
+-Expiration policy is needed so that data is not stored permanently
+-Consistency is needed to keep data in cache and database in sync
+-A single cache is a SPOF
+-Eviction policy is needed to clear data not being used
+
+Content delivery network (CDN)
+-Geographically dispersed caches for static content
+-CDNs are run by third-party providers, charged for data transfers
+-Needs appropriate cache expiry
+-CDN fallback: coping with CDN failure, route requests back to origin
+
+Stateless web tier
+-Move state out of the web tier
+-State data stored in a shared data store, out of web servers
+
+Data centers
+-Split traffic to closest (geographically) data center
+-In event of outage, direct to healthy data center
+-Traffic redirection needs tools like GeoDNS
+-Data synchronization needed where uses from different regions use different databases/caches
+-Important to test web app at different locations and maintain consistency
+
+Message queue
+-Component stored in memory to support asynchronous communication
+-Producers create messages and publish to queue
+-Consumers connect to queue and perform actions
+-Consumer can act even when producer is offline
+-Consumer and producers can be scaled independently
+
+Logging, metrics, automation
+-Logging - monitor error logs to identify problems
+-Metrics - understand health status of the system
+-Automation - large enough systems require automated tools for productivity
+
+Database scaling
+-Two approahces vertical and horizontal
+-Vertical scaling
+	-Similar to before, add more CPU, RAM
+	-Greater SPOF
+	-Powerful servers are costly
+-Horizontal scaling (sharing)
+	-Many small shards, each share same schema
+	-Actual data is unique to each shard
+	-Sharding key - column(s) that determine how data is distributed
+	-Resharding data needed when shards exhausted from uneven data distribution
+	-Celebrity problem - excessive access to a single shard
+	-Join and de-normalization - Hard to perform join ops across shards
+
+Summary for scaling
+-keep web tier statless
+-build redundancy at every tier
+-cache data as much as you can
+-support multiple data centers
+-host static assets in CDN
+-scale data tier w/ sharding
+-split tiers into individual services
+-monitor system and use automation tools
