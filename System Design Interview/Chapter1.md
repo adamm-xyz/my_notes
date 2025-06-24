@@ -141,6 +141,8 @@ As user load increases, isolate the **web tier** and **data tier** to scale each
 - **Celebrity problem**: a heavily accessed user/data item overloads one shard.
 - **Join and denormalization**: hard to perform ops across shards, data must be renormalized.
 
+---
+
 ## Summary for scaling
 - keep web tier stateless
 - build redundancy at every tier
@@ -150,3 +152,5 @@ As user load increases, isolate the **web tier** and **data tier** to scale each
 - scale data tier w/ sharding
 - split tiers into individual services
 - monitor system and use automation tools
+
+---
