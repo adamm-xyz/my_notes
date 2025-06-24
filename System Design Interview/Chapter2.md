@@ -53,6 +53,7 @@ QPS (Query per second)
 - **DAU** = 300M * 50% = 150M
 - **Tweets QPS** = 150M * 2 tweets / 24h / 3600s = ~3500
 - **Peak QPS** = 2 * QPS = ~7000
+
 Storage
 - Average tweet size: ~1MB
 - **Media storage** = 150M * 2 * 10% * 1MB = 30TB per day!
