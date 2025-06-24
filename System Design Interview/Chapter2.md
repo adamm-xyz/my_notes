@@ -50,13 +50,13 @@ Ability of a system to be continuosly operational for a desirably long period of
 
 ### Estimations:
 QPS (Query per second)
-**DAU** = 300M * 50% = 150M
-**Tweets QPS** = 150M * 2 tweets / 24h / 3600s = ~3500
-**Peak QPS** = 2 * QPS = ~7000
+- **DAU** = 300M * 50% = 150M
+- **Tweets QPS** = 150M * 2 tweets / 24h / 3600s = ~3500
+- **Peak QPS** = 2 * QPS = ~7000
 Storage
-Average tweet size: ~1MB
-**Media storage** = 150M * 2 * 10% * 1MB = 30TB per day!
-**5 year media storage** = 30TB * 365 * 5 = ~55PB
+- Average tweet size: ~1MB
+- **Media storage** = 150M * 2 * 10% * 1MB = 30TB per day!
+- **5 year media storage** = 30TB * 365 * 5 = ~55PB
 
 ---
 
