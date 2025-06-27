@@ -1,8 +1,6 @@
 
 # System Design Interview - Chapter 1 Summary
 
----
-
 ## Single Server Setup
 - All services (web app, database, cache) run on a single server.
 - Basic flow:  
@@ -10,8 +8,6 @@
 - Traffic originates from:
   - **Web apps**: server-side logic (Java, Python) + client-side UI (HTML, JavaScript).
   - **Mobile apps**: use HTTP APIs, expect JSON responses.
-
----
 
 ## Database Tiering
 As user load increases, isolate the **web tier** and **data tier** to scale each independently.
@@ -29,8 +25,6 @@ As user load increases, isolate the **web tier** and **data tier** to scale each
   - Massive datasets
 - Examples: CouchDB, Cassandra, Neo4j, DynamoDB.
 
----
-
 ## Scaling Approaches
 
 ### Vertical Scaling ("Scale Up")
@@ -43,15 +37,11 @@ As user load increases, isolate the **web tier** and **data tier** to scale each
 - Enables high availability and fault tolerance.
 - Supports larger, distributed systems.
 
----
-
 ## Load Balancer
 - Distributes incoming requests across multiple servers.
 - Clients communicate with the load balancer, not directly with web servers.
 - Improves availability, failover, and scalability.
 - Uses private IPs for backend communication.
-
----
 
 ## Database Replication
 ### Master-Slave Model
@@ -62,8 +52,6 @@ As user load increases, isolate the **web tier** and **data tier** to scale each
 - Scalability (parallel read handling)
 - High availability
 - Failover: if a slave or master goes down, roles can be reassigned temporarily.
-
----
 
 ## Caching
 - Stores frequently accessed or computationally expensive data for faster responses.
@@ -81,8 +69,6 @@ As user load increases, isolate the **web tier** and **data tier** to scale each
   - **Consistency mechanism** to sync cache and DB.
   - Cache clustering to avoid SPOFs.
 
----
-
 ## Content Delivery Network (CDN)
 - Distributed caching for **static content** (e.g., images, scripts).
 - Hosted by third-party providers; cost based on bandwidth.
@@ -90,13 +76,9 @@ As user load increases, isolate the **web tier** and **data tier** to scale each
   - Cache control and expiry headers.
   - Fallback routing to origin server if CDN fails.
 
----
-
 ## Stateless Web Tier
 - Move all session/state data to an external, shared data store (e.g., Redis, DB).
 - Allows any server to handle any request (enables scaling and fault tolerance).
-
----
 
 ## Multi-Data Center Deployment
 - Route traffic to geographically closest data center (using **GeoDNS** or similar).
@@ -107,8 +89,6 @@ As user load increases, isolate the **web tier** and **data tier** to scale each
 - Ensuring consistency across caches and databases.
 - Requires testing across geographies for consistency.
 
----
-
 ## Message Queue (Asynchronous Processing)
 - Producers push tasks to a **message queue** 
 - Consumers pull and process them asynchronously.
@@ -118,14 +98,10 @@ As user load increases, isolate the **web tier** and **data tier** to scale each
 - Each can scale independently.
 - Tasks can be retried, queued, or delayed.
 
----
-
 ## Monitoring & Automation
 - **Logging**: Capture errors and system behavior.
 - **Metrics**: Track performance, uptime, throughput, etc.
 - **Automation**: Crucial for deploying and managing large-scale systems efficiently (e.g., auto-scaling, CI/CD).
-
----
 
 ## Advanced Database Scaling (Sharding)
 - **Horizontal partitioning** of a database into **shards**.
@@ -141,8 +117,6 @@ As user load increases, isolate the **web tier** and **data tier** to scale each
 - **Celebrity problem**: a heavily accessed user/data item overloads one shard.
 - **Join and denormalization**: hard to perform ops across shards, data must be renormalized.
 
----
-
 ## Summary for scaling
 - keep web tier stateless
 - build redundancy at every tier
@@ -152,5 +126,3 @@ As user load increases, isolate the **web tier** and **data tier** to scale each
 - scale data tier w/ sharding
 - split tiers into individual services
 - monitor system and use automation tools
-
----
