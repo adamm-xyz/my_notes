@@ -94,4 +94,42 @@
 - Limit based on x per minute/day
 - Rules generally stored in config files on disk
 
+### Exceeding rate limit
+- Rate limited requests are given HTTP response 429
+- Rate limiters return HTTP headers
+- X-Ratelimit-remaining, X-Ratelimit-Limit, X-Ratelimit-Retry-After
+
+### Detailed design
+- Workers pull rules from disk and store in cache
+- Requests go to rate limiter first
+- Rate limiter loads rules from cache, counters from Redis
+
+### Challenges of Rate Limiters in distributed environment
+**Race condition**
+- Happens in concurrent environments
+- Two requests concurrently read counter value before either writes it back
+- Locks are simple solution but slow the system down immensely
+- Solutions: Lua script, sorted sets data structure in Redis
+
+**Synchronization**
+- Multiple rate limiters may be needed for traffic
+- Counters and rules need to be synch'd between them
+- Best to just use centralized data store like Redis
+
+### Performance and Monitoring
+- Multi-data center setup is crucial because latency is high for far away users
+- Synchronize data with an eventual consistency model
+- Need to check if limiting rules and algorithm is effective
+- If rules are too strict, many valid requests are dropped
+- Algorithm may be poorly suited for typical use of app
+
 ## Step 4
+### Overview
+- Discussed some algorithms of rate limiting
+- System arch, distributed env, performance and monitoring
+
+### Additional talking points
+- Hard vs soft rate limiting
+- Rate limiting at different levels (7 OSI layers)
+- Design client with best practices to avoid rate limiting
+- (Client cache for API calls, code to catch exceptions, add back off time to retry logic)
