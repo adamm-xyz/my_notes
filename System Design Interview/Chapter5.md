@@ -42,4 +42,14 @@ When a hash table is re-sized, only k/n keys need to be remapped
 - As number of virtual nodes increase, distribution becomes more balanced
 - But more spaces are needed to store data about virtual nodes
 
+### Benefits
+- Minimzed keys are redistributed when servers added/removed
+- Easy to scale horizontally
+- Mitigate hotspot key problem
 
+### Notable real world consistent hashing use
+- Amazon's dynamo database
+- Apache Cassandra
+- Discord chat
+- Akamai CDN
+- Maglev network load balancer
